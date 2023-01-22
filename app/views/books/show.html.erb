@@ -58,7 +58,17 @@
           </tbody>
         </table>
       <% end %>
-      <%= render 'layouts/errors', obj: @book_comment %>
+      <!--%= render 'layouts/errors', obj: @book_comment %>-->
+      <% if @book_comment.errors.any? %>
+        <div id="error_explanation">
+          <h3><%= pluralize(@book_comment.errors.count, "error") %> prohibited this obj from being saved:</h3>
+          <ul>
+            <% @book_comment.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
       <%= form_with model: [@book, @book_comment], local: true do |f| %>
         <div class="form-group">
           <%= f.label :comment %>
