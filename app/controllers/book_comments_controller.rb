@@ -5,7 +5,7 @@ class BookCommentsController < ApplicationController
     comment = current_user.book_comments.new(book_comment_params)
     comment.book_id = book.id
     comment.save
-    
+
     if redirect_to book_path(book)
     else
       render 'books/show'
