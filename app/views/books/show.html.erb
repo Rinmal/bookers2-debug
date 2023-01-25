@@ -25,38 +25,10 @@
           <% end %>
         </tr>
       </table>
-      <% if @book_comments.any? %>
-        <h4>Comments</h4>
-        <table class='table-sm'>
-          <tbody>
-            <% @book_comments.each do |book_comment| %>
-              <tr>
-                <td>
-                  <%= link_to(book_comment.user) do %>
-                    <%= image_tag book_comment.user.get_profile_image, size:'50x50' %>
-                    <%= book_comment.user.name %>
-                  <% end %>
-                </td>
-                <td><%= book_comment.comment %></td>
-                <% if book_comment.user == current_user %>
-                  <td><%= link_to 'Destroy', book_book_comment_path(book_comment.book, book_comment), method: :delete, data: {confirm: '本当に消しますか？' }, class: 'btn btn-danger btn-sm' %></td>
-                <% end %>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
-      <%= render 'layouts/errors', obj: @book_comment %>
-      <%= form_with model: [@book, @book_comment], local: true do |f| %>
-        <div class="form-group">
-          <%= f.label :comment %>
-          <%= f.text_area :comment, class: 'form-control comment' %>
-        </div>
-        <div class="form-group">
-          <%= f.submit 'Send comment', class: 'btn btn-info btn-sm' %>
-        </div>
-      <% end %>
-
+      <h4>Comments</h4>
+      <div id="comment_index"><%= render 'book_comments/index', book_comments: @book_comments %></div>
+      <!--<div id="error_message">%= render 'layouts/errors', obj: @book_comment %></div>-->
+      <div id="comment"><%= render 'book_comments/form', book: @book, book_comment: @book_comment %></div>
     </div>
   </div>
 </div>
