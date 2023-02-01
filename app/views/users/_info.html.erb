@@ -27,7 +27,19 @@
     <%= link_to user_relationships_path(user), method: :delete do %>
       <button class="btn btn-info">フォロー外す</button>
     <% end %>
-  <% elsif%>
+    <% if (current_user.is_followed_by? user) && (user.is_followed_by? current_user) %>
+      <% if @isRoom == true %>
+        <p class="user-show-room"><a href="/rooms/<%= @roomId %>" class="btn btn-outline-secondary mx-4">Send chat</a></p>
+      <% else %>
+        <%= form_with model: @room do |f| %>
+          <%= fields_for @entry do |e| %>
+            <%= e.hidden_field :user_id, value: user.id %>
+          <% end %>
+          <%= f.submit "Start chat", class: 'btn btn-outline-info mx-4 user-show-chat'%>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
     <%= link_to user_relationships_path(user), method: :post do %>
       <button class="btn btn-success">フォローする</button>
     <% end %>
