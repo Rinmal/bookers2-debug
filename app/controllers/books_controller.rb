@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update]
+  impressionist :actions => [:show]
 
   def show
     @book = Book.find(params[:id])
@@ -7,6 +8,7 @@ class BooksController < ApplicationController
     @nbook = Book.new
     @book_comment = BookComment.new
     @book_comments = BookComment.all
+    impressionist(@book, nil, unique: [:session_hash.to_s])
   end
 
   def index
